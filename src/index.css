@@ -3,6 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 99%;
@@ -51,6 +52,12 @@
 
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
+
+    /* CanteenGo Brand Colors */
+    --orange-primary: #FF6B35;
+    --green-accent: #2ECC71;
+    --navy-dark: #0F172A;
+    --white-soft: #F8FAFC;
   }
 
   .dark {
@@ -91,10 +98,102 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    scroll-behavior: smooth;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply backdrop-blur-2xl bg-white/10 border border-white/20 rounded-2xl;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-2xl bg-gray-900/40 border border-gray-700/30 rounded-2xl;
+  }
+
+  /* Gradient Backgrounds */
+  .gradient-hero {
+    @apply bg-gradient-to-br from-orange-500 via-purple-500 to-pink-500;
+  }
+
+  .gradient-card {
+    @apply bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800;
+  }
+
+  .gradient-orange {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600;
+  }
+
+  .gradient-green {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600;
+  }
+
+  .gradient-purple {
+    @apply bg-gradient-to-br from-purple-500 to-indigo-600;
+  }
+
+  /* Scrollbar Hiding */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth Transitions */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Card with Shadow */
+  .card-shadow {
+    @apply rounded-2xl shadow-card border border-gray-100 dark:border-gray-800;
+  }
+
+  /* Shimmer Loading */
+  .shimmer-loading {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-orange-500 text-white rounded-2xl px-6 py-3 font-semibold transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply border-2 border-orange-500 text-orange-500 rounded-2xl px-6 py-3 font-semibold transition-all duration-200 hover:bg-orange-500/10 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 rounded-2xl px-6 py-3 font-semibold transition-all duration-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700;
+  }
+
+  .btn-destructive {
+    @apply bg-red-500 text-white rounded-2xl px-6 py-3 font-semibold transition-all duration-200 hover:opacity-90 active:scale-95;
+  }
+
+  /* Text Utilities */
+  .text-gradient {
+    @apply bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent;
+  }
+
+  /* Focus Ring */
+  .focus-ring {
+    @apply focus:ring-2 focus:ring-orange-500 focus:outline-none;
   }
 }
 

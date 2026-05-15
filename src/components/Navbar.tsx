@@ -1,12 +1,14 @@
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { LogOut, ShoppingCart, Bell, UtensilsCrossed } from 'lucide-react';
+import { LogOut, ShoppingCart, Bell, UtensilsCrossed, Moon, Sun } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
 export default function Navbar() {
   const { profile, role, signOut } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const { itemCount } = useCart();
   const navigate = useNavigate();
 
@@ -44,6 +46,9 @@ export default function Navbar() {
               </Button>
             </>
           )}
+          <Button variant="ghost" size="icon" className="h-9 w-9" onClick={toggleTheme} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+            {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </Button>
           <span className="hidden text-sm sm:inline">{profile?.name}</span>
           {role && <Badge className={roleColors[role]} variant="secondary">{role}</Badge>}
           <Button variant="ghost" size="icon" className="h-9 w-9" onClick={signOut}>

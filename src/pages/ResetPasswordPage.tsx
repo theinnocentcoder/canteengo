@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, Loader2, Eye, EyeOff } from 'lucide-react';
+import { UtensilsCrossed, Loader2, Eye, EyeOff, Moon, Sun } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState('');
@@ -14,6 +15,7 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     // Listen for the PASSWORD_RECOVERY event from the redirect
@@ -49,6 +51,11 @@ export default function ResetPasswordPage() {
   if (!ready) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background p-4">
+        <div className="absolute top-4 right-4">
+          <Button variant="ghost" size="icon" onClick={toggleTheme}>
+            {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </Button>
+        </div>
         <Card className="w-full max-w-md shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="font-heading text-xl">Invalid or expired link</CardTitle>
@@ -66,6 +73,11 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="absolute top-4 right-4">
+        <Button variant="ghost" size="icon" onClick={toggleTheme}>
+          {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+        </Button>
+      </div>
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
           <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
