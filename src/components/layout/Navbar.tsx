@@ -76,9 +76,9 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
             {/* Dark Mode Toggle */}
             <motion.button
               onClick={toggleDarkMode}
-              className="p-2 hover:bg-white/20 rounded-full transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              className="p-2.5 bg-gradient-to-br from-yellow-400 to-orange-400 dark:from-indigo-600 dark:to-purple-600 hover:shadow-lg dark:hover:shadow-indigo-500/50 rounded-full transition-all duration-300"
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
               aria-label="Toggle dark mode"
             >
               <AnimatePresence mode="wait">
@@ -88,9 +88,9 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
                     initial={{ rotate: -90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Sun className="w-5 h-5" />
+                    <Sun className="w-6 h-6 text-white drop-shadow-md" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -98,9 +98,9 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
                     initial={{ rotate: 90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Moon className="w-5 h-5" />
+                    <Moon className="w-6 h-6 text-white drop-shadow-md" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -202,15 +202,15 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
       animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="grid grid-cols-5 gap-1 max-w-md mx-auto">
-        {navItems.map((item, idx) => (
+      <div className="flex items-center justify-around px-4 py-2">
+        {navItems.slice(0, 4).map((item, idx) => (
           <motion.div
             key={item.label}
             whileTap={{ scale: 0.9 }}
           >
             {item.path.startsWith('#') ? (
               <button
-                className={`w-full py-3 flex flex-col items-center justify-center text-xs font-medium transition-colors ${
+                className={`py-3 px-3 flex flex-col items-center justify-center text-xs font-medium transition-colors ${
                   location.pathname === item.path
                     ? 'text-orange-500'
                     : 'text-gray-600 dark:text-gray-400'
@@ -222,7 +222,7 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
             ) : (
               <Link
                 to={item.path}
-                className={`w-full py-3 flex flex-col items-center justify-center text-xs font-medium transition-colors ${
+                className={`py-3 px-3 flex flex-col items-center justify-center text-xs font-medium transition-colors ${
                   location.pathname.includes(item.path.split('/')[1])
                     ? 'text-orange-500'
                     : 'text-gray-600 dark:text-gray-400'
@@ -234,6 +234,85 @@ const Navbar: React.FC<{ isMobile?: boolean }> = ({ isMobile = false }) => {
             )}
           </motion.div>
         ))}
+
+        {/* Mobile Theme Toggle - Center/Prominent */}
+        <motion.button
+          onClick={toggleDarkMode}
+          className="p-3 bg-gradient-to-br from-yellow-400 to-orange-400 dark:from-indigo-600 dark:to-purple-600 hover:shadow-lg dark:hover:shadow-indigo-500/50 rounded-full transition-all duration-300"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Toggle dark mode"
+        >
+          <AnimatePresence mode="wait">
+            {isDark ? (
+              <motion.div
+                key="sun"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Sun className="w-5 h-5 text-white drop-shadow-md" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="moon"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Moon className="w-5 h-5 text-white drop-shadow-md" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
+
+        {/* Profile Icon */}
+        <motion.div
+          key="profile"
+          whileTap={{ scale: 0.9 }}
+        >
+          <button
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className={`py-3 px-3 flex flex-col items-center justify-center text-xs font-medium transition-colors ${
+              isProfileOpen
+                ? 'text-orange-500'
+                : 'text-gray-600 dark:text-gray-400'
+            }`}
+          >
+            <span className="text-xl mb-1">👤</span>
+            Profile
+          </button>
+
+          <AnimatePresence>
+            {isProfileOpen && (
+              <motion.div
+                className="absolute bottom-20 right-4 w-48 glass dark:glass-dark rounded-lg shadow-lg overflow-hidden"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                  <p className="font-semibold text-sm">Rahul Kumar</p>
+                  <p className="text-xs text-gray-500">₹ 247.50 wallet</p>
+                </div>
+                <div className="p-2 space-y-1">
+                  <button className="w-full text-left px-3 py-2 hover:bg-white/10 rounded transition-colors text-sm flex items-center gap-2">
+                    <Wallet className="w-4 h-4" /> Wallet
+                  </button>
+                  <button className="w-full text-left px-3 py-2 hover:bg-white/10 rounded transition-colors text-sm flex items-center gap-2">
+                    <Settings className="w-4 h-4" /> Settings
+                  </button>
+                  <button className="w-full text-left px-3 py-2 hover:bg-white/10 rounded transition-colors text-sm flex items-center gap-2 text-red-500">
+                    <LogOut className="w-4 h-4" /> Logout
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.div>
   );
